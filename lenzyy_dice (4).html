@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenzyy Dice</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka One', cursive;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        /* Ana container */
+        .main-container {
+            display: flex;
+            gap: 50px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* Zar alanı */
+        .dice-area {
+            flex: 1;
+            min-width: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        /* Zarların üzerindeki başlık */
+        .dice-title {
+            font-size: 2.5rem;
+            color: #ffffff;
+            text-shadow: 3px 3px 0px #2c7bb6, 6px 6px 0px rgba(0,0,0,0.2);
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            animation: bounce 2s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .dice-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .dice-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dice-label {
+            font-size: 1.1rem;
+            color: #ffffff;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            background: rgba(0,0,0,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            min-width: 100px;
+            text-align: center;
+            margin-bottom: 2px;
+        }
+
+        .dice {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3), inset 0 3px 10px rgba(255,255,255,0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 5px solid #ffffff;
+        }
+
+        .dice:hover {
+            transform: scale(1.05);
+        }
+
+        .dice-dot {
+            width: 22px;
+            height: 22px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Renkler */
+        .red { background: #ff3333; }
+        .orange { background: #ff8800; }
+        .yellow { background: #ffdd00; }
+        .green { background: #33cc33; }
+        .blue { background: #3366ff; }
+        .purple { background: #9933ff; }
+
+        /* Buton */
+        .roll-btn {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+            letter-spacing: 2px;
+        }
+
+        .roll-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+        }
+
+        .roll-btn:active {
+            transform: translateY(0);
+        }
+
+        .roll-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Animasyon */
+        @keyframes shake {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-10deg) scale(1.1); }
+            50% { transform: rotate(10deg) scale(1.1); }
+            75% { transform: rotate(-10deg) scale(1.1); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+
+        .shaking {
+            animation: shake 0.3s ease infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dice-title { font-size: 2rem; }
+            .dice { width: 90px; height: 90px; }
+            .main-container { flex-direction: column; align-items: center; }
+            .dice-label { font-size: 0.9rem; min-width: 80px; }
+            .dice-area { min-width: 280px; padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="dice-area">
+            <div class="dice-title">LENZYY DICE</div>
+            <div class="dice-container" id="diceContainer">
+                <div class="dice-wrapper">
+                    <div class="dice-label" id="label1">Kırmızı</div>
+                    <div class="dice red" id="dice1"><div class="dice-dot"></div></div>
+                </div>
+                <div class="dice-wrapper">
+                    <div class="dice-label" id="label2">Turuncu</div>
+                    <div class="dice orange" id="dice2"><div class="dice-dot"></div></div>
+                </div>
+                <div class="dice-wrapper">
+                    <div class="dice-label" id="label3">Sarı</div>
+                    <div class="dice yellow" id="dice3"><div class="dice-dot"></div></div>
+                </div>
+                <div class="dice-wrapper">
+                    <div class="dice-label" id="label4">Yeşil</div>
+                    <div class="dice green" id="dice4"><div class="dice-dot"></div></div>
+                </div>
+            </div>
+            <button class="roll-btn" id="rollBtn" onclick="rollDice()">🎲 ZAR AT</button>
+        </div>
+    </div>
+
+    <script>
+        const allColors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+        const colorNames = {
+            'red': 'Kırmızı',
+            'orange': 'Turuncu',
+            'yellow': 'Sarı',
+            'green': 'Yeşil',
+            'blue': 'Mavi',
+            'purple': 'Mor'
+        };
+
+        function rollDice() {
+            const btn = document.getElementById('rollBtn');
+            const diceElements = [
+                document.getElementById('dice1'),
+                document.getElementById('dice2'),
+                document.getElementById('dice3'),
+                document.getElementById('dice4')
+            ];
+            const labelElements = [
+                document.getElementById('label1'),
+                document.getElementById('label2'),
+                document.getElementById('label3'),
+                document.getElementById('label4')
+            ];
+
+            btn.disabled = true;
+            btn.textContent = '⏳ ZAR ATILIYOR...';
+
+            diceElements.forEach(dice => {
+                dice.classList.add('shaking');
+            });
+
+            // Direkt rastgele 4 renk seç (tekrar edebilir)
+            const results = [];
+            for (let i = 0; i < 4; i++) {
+                const randomIndex = Math.floor(Math.random() * allColors.length);
+                results.push(allColors[randomIndex]);
+            }
+
+            setTimeout(() => {
+                diceElements.forEach((dice, index) => {
+                    dice.classList.remove('shaking');
+                    allColors.forEach(c => dice.classList.remove(c));
+                    dice.classList.add(results[index]);
+                    labelElements[index].textContent = colorNames[results[index]];
+                });
+
+                btn.disabled = false;
+                btn.textContent = '🎲 ZAR AT';
+            }, 1500);
+        }
+
+        window.onload = function() {
+            const diceElements = [
+                document.getElementById('dice1'),
+                document.getElementById('dice2'),
+                document.getElementById('dice3'),
+                document.getElementById('dice4')
+            ];
+            const labelElements = [
+                document.getElementById('label1'),
+                document.getElementById('label2'),
+                document.getElementById('label3'),
+                document.getElementById('label4')
+            ];
+
+            diceElements.forEach((dice, index) => {
+                const randomColor = allColors[Math.floor(Math.random() * allColors.length)];
+                allColors.forEach(c => dice.classList.remove(c));
+                dice.classList.add(randomColor);
+                labelElements[index].textContent = colorNames[randomColor];
+            });
+        };
+    </script>
+</body>
+</html>
